@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import s from './ContactForm.module.css';
 import PropTypes from 'prop-types'; // ES6
+import { connect } from 'react-redux';
+import { addContact } from '../../redux/contacts/actions';
 
-export default function ContactForm({ onSubmit }) {
+function ContactForm({ onAdd, onSubmit }) {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -33,6 +35,7 @@ export default function ContactForm({ onSubmit }) {
       number,
     };
     onSubmit(contact);
+    onAdd(contact);
     reset();
   };
   const reset = () => {
@@ -78,3 +81,16 @@ export default function ContactForm({ onSubmit }) {
 ContactForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
+
+// const mapStateToProps = state => {
+//   return {
+//     contactsList: state.contacts,
+//   };
+// };
+const mapDispatchToProps = dispatch => {
+  return {
+    onAdd: contact => dispatch(addContact(contact)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(ContactForm);

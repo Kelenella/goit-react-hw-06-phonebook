@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Container from '../Container';
-import ContactForm from '../ContactForm';
+import ContactForm from '../ContactForm/ContactForm';
 import Filter from '../Filter';
 import ContactList from '../ContactsList';
 import initialContacts from '../../contacts.json';
@@ -49,7 +49,7 @@ function App() {
       <h1 className={s.title}>Phonebook</h1>
       <ContactForm onSubmit={formSubmitHandler} />
       <Filter value={filter} onChange={changeFilter} />
-      <h2 className={s.contactTitle}>Contacts</h2>
+      <h2 className={s.contactsTitle}>Contacts</h2>
       <ContactList
         contacts={getVisibleContact()}
         onDeleteContact={deleteContact}

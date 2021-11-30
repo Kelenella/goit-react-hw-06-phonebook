@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import { useDispatch, useSelector } from 'react-redux';
+import { getContacts } from '../../redux/Phonebook/phonebook-selectors';
+import actions from '../../redux/Phonebook/phonebook-actions';
 import s from './ContactForm.module.css';
-import PropTypes from 'prop-types'; // ES6
-import { connect } from 'react-redux';
-import { addContact } from '../../redux/contacts/actions';
-
-function ContactForm({ onAdd, onSubmit }) {
+// import PropTypes from 'prop-types';
+export default function ContactForm() {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+  const contacts = useSelector(getContacts);
+  const dispatch = useDispatch();
 
   const handleInputChange = e => {
     const { name, value } = e.target;
@@ -23,21 +24,19 @@ function ContactForm({ onAdd, onSubmit }) {
     }
   };
 
-  // const handlerInputChange = e => {
-  //   setNumber(e.target.value);
-  // };
-
   const handleSubmit = e => {
     e.preventDefault();
-    const contact = {
-      id: uuidv4(),
-      name,
-      number,
-    };
-    onSubmit(contact);
-    onAdd(contact);
+    const comparableElement = contacts.some(
+      element => element.name.toLowerCase() === name.toLowerCase(),
+    );
+    if (comparableElement) {
+      reset();
+      return alert(`${name} is already in the directory`);
+    }
+    dispatch(actions.addContact({ name, number }));
     reset();
   };
+
   const reset = () => {
     setName('');
     setNumber('');
@@ -78,19 +77,6 @@ function ContactForm({ onAdd, onSubmit }) {
   );
 }
 
-ContactForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};
-
-// const mapStateToProps = state => {
-//   return {
-//     contactsList: state.contacts,
-//   };
+// Form.propTypes = {
+//   onSubmit: PropTypes.func.isRequired,
 // };
-const mapDispatchToProps = dispatch => {
-  return {
-    onAdd: contact => dispatch(addContact(contact)),
-  };
-};
-
-export default connect(null, mapDispatchToProps)(ContactForm);

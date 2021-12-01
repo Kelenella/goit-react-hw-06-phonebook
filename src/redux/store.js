@@ -13,7 +13,7 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import phonebookReducer from './Phonebook/phonebook-reducer';
+import phonebookReducer from './phonebook/phonebook-reducer';
 
 // const rootReducer = combineReducers({
 //   phonebook: phonebookReducer,

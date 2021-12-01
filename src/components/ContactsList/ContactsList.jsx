@@ -1,7 +1,7 @@
 import Contact from '../Contact';
 import { useSelector, useDispatch } from 'react-redux';
-import { getFilteredContacts } from '../../redux/Phonebook/phonebook-selectors';
-import actions from '../../redux/Phonebook/phonebook-actions';
+import { getFilteredContacts } from '../../redux/phonebook/phonebook-selectors';
+import actions from '../../redux/phonebook/phonebook-actions';
 import s from './ContactsList.module.css';
 
 export default function ContactsList() {
